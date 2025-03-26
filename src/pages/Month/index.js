@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import dayjs from 'dayjs'
 import { useSelector } from 'react-redux'
 import _ from 'lodash'
+import DailyBill from './components/DayBill'
 
 const Month = () => {
   // 按月做数据分组
@@ -57,9 +58,22 @@ const Month = () => {
     console.log(formatDate)
     // 不可给 currentMonthList，而应该调用setMonthList 更新状态
     setMonthList(monthGroup[formatDate])
-
     setCurrentDate(formatDate)
   }
+
+  // 当前月按照日来分组
+  const dayGroup = useMemo(() => {
+    // return出去计算之后的值
+    const groupDate = _.groupBy(currentMonthList, (item) =>
+      dayjs(item.date).format('YYYY-MM-DD')
+    )
+    const keys = Object.keys(groupDate)
+    return {
+      groupDate,
+      keys,
+    }
+  }, [currentMonthList])
+
   return (
     <div className="monthlyBill">
       <NavBar className="nav" backArrow={false}>
@@ -71,9 +85,7 @@ const Month = () => {
           <div className="date" onClick={() => setDateVisible(true)}>
             <span className="text">{currentDate + ''}月账单</span>
             {/* 点头朝向切换 根据 expand 是否存在 */}
-            <span
-              className={classNames('arrow', dateVisible && 'expand')}
-            ></span>
+            <span className={classNames('arrow', dateVisible && 'expand')}></span>
           </div>
           {/* 统计区域 */}
           <div className="twoLineOverview">
@@ -102,6 +114,10 @@ const Month = () => {
             max={new Date()}
           />
         </div>
+        {/* 单日列表统计 */}
+        {dayGroup.keys.map((key) => {
+          return <DailyBill key={key} date={key} billList={dayGroup.groupDate[key]} />
+        })}
       </div>
     </div>
   )
