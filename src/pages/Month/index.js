@@ -22,12 +22,35 @@ const Month = () => {
     return dayjs(new Date()).format('YYYY-MM')
   })
 
-  // 确认datePicker
+  const [currentMonthList, setMonthList] = useState([])
+
+  const monthResult = useMemo(() => {
+    // 支出 / 收入 / 结余
+    // 支出
+    const pay = currentMonthList
+      .filter((item) => item.type === 'pay')
+      .reduce((pre, next) => pre + next.money, 0)
+    // 收入
+    const income = currentMonthList
+      .filter((item) => item.type === 'income')
+      .reduce((pre, next) => pre + next.money, 0)
+    return {
+      pay,
+      income,
+      total: pay + income,
+    }
+  }, [currentMonthList])
+
+  // 确认 datePicker回调
   const onConfirm = (date) => {
     setDateVisible(false)
     // 获取并渲染当前选择的日期
     // console.log(date)
     const formatDate = dayjs(date).format('YYYY-MM')
+    console.log(formatDate)
+    // 不可给 currentMonthList，而应该调用setMonthList 更新状态
+    setMonthList(monthGroup[formatDate])
+
     setCurrentDate(formatDate)
   }
   return (
@@ -48,15 +71,15 @@ const Month = () => {
           {/* 统计区域 */}
           <div className="twoLineOverview">
             <div className="item">
-              <span className="money">{100}</span>
+              <span className="money">{monthResult.pay.toFixed(2)}</span>
               <span className="type">支出</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{monthResult.income.toFixed(2)}</span>
               <span className="type">收入</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{monthResult.total.toFixed(2)}</span>
               <span className="type">结余</span>
             </div>
           </div>
