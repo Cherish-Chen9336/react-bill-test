@@ -2,14 +2,23 @@ import { NavBar, DatePicker } from 'antd-mobile'
 import './index.scss'
 import { useState } from 'react'
 import classNames from 'classnames'
+import dayjs from 'dayjs'
 
 const Month = () => {
   // 控制弹框的展开和关闭
   const [dateVisible, setDateVisible] = useState(false)
+  // 控制时间显示
+  const [currentDate, setCurrentDate] = useState(() => {
+    return dayjs(new Date()).format('YYYY-MM')
+  })
 
   // 确认datePicker
-  const onConfirm = () => {
+  const onConfirm = (date) => {
     setDateVisible(false)
+    // 获取并渲染当前选择的日期
+    // console.log(date)
+    const formatDate = dayjs(date).format('YYYY-MM')
+    setCurrentDate(formatDate)
   }
   return (
     <div className="monthlyBill">
@@ -20,7 +29,7 @@ const Month = () => {
         <div className="header">
           {/* 时间切换区域 */}
           <div className="date" onClick={() => setDateVisible(true)}>
-            <span className="text">2023 | 3月账单</span>
+            <span className="text">{currentDate + ''}月账单</span>
             {/* 点头朝向切换 根据 expand 是否存在 */}
             <span
               className={classNames('arrow', dateVisible && 'expand')}
