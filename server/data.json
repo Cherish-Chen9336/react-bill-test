@@ -90,6 +90,46 @@
       "money": -100,
       "date": "2025-03-27T01:49:48.874Z",
       "useFor": "food"
+    },
+    {
+      "id": "cf51",
+      "type": "pay",
+      "money": -243,
+      "date": "2025-03-27T02:04:01.561Z",
+      "useFor": "book"
+    },
+    {
+      "id": "697a",
+      "type": "income",
+      "money": 775,
+      "date": "2025-03-27T02:04:59.952Z",
+      "useFor": "bonus"
+    },
+    {
+      "id": "77d9",
+      "type": "pay",
+      "money": -865,
+      "date": "2025-03-18T16:00:00.000Z",
+      "useFor": "longdistance"
+    },
+    {
+      "id": "d6c7",
+      "type": "pay",
+      "money": 0,
+      "useFor": ""
+    },
+    {
+      "id": "5f2d",
+      "type": "pay",
+      "money": -7876,
+      "useFor": "game"
+    },
+    {
+      "id": "c6c7",
+      "type": "pay",
+      "money": -124,
+      "date": "2025-03-25T16:00:00.000Z",
+      "useFor": "drinks"
     }
   ]
 }
